@@ -56,7 +56,6 @@ class Scrabble {
       }
 
       multiplier = this.wordMultiplier(element, multiplier)
-      console.log(element + ` the multiplier is ${multiplier}`)
     })
 
     isValidWord = isValidWord && multiplier === 1
