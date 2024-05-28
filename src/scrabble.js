@@ -35,22 +35,55 @@ class Scrabble {
     if (typeof this.word !== 'string') {
       return 0
     }
-
+    const regex = /([A-Z{}[\]])/g
     const splitString = this.word.toUpperCase().split('')
-    console.log(splitString)
     let isValidWord = true
     let total = 0
+    let multiplier = 1
     splitString.forEach((element, index) => {
-      if (!this.points[element]) {
+      if (
+        !isValidWord ||
+        !element.match(regex) ||
+        (multiplier <= 1 && element === ']') ||
+        (multiplier <= 1 && element === '}')
+      ) {
         isValidWord = false
         return
       }
-      total += this.points[element]
+
+      if (this.points[element]) {
+        total += this.points[element] * multiplier
+      }
+
+      multiplier = this.wordMultiplier(element, multiplier)
+      console.log(element + ` the multiplier is ${multiplier}`)
     })
+
+    isValidWord = isValidWord && multiplier === 1
 
     const finalScore = isValidWord ? total : 0
 
     return finalScore
+  }
+
+  wordMultiplier(letter, multiplier) {
+    if (letter === '{') {
+      return multiplier * 2
+    }
+
+    if (letter === '[') {
+      return multiplier * 3
+    }
+
+    if (letter === '}') {
+      return multiplier / 2
+    }
+
+    if (letter === ']') {
+      return multiplier / 3
+    }
+
+    return multiplier
   }
 }
 

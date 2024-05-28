@@ -51,4 +51,66 @@ describe("Scrabble", function() {
 
     expect(scrabble.score()).toEqual(41)
   })
+
+  it('returns 6 for double letter o', () => {
+    scrabble = new Scrabble('d{o}g')
+    expect(scrabble.score()).toEqual(6)
+  })
+
+  it('returns 6 for triple letter o', () => {
+    scrabble = new Scrabble('d[o]g')
+    expect(scrabble.score()).toEqual(7)
+  })
+
+  it('returns 0 for invalid multiplier', () => {
+    scrabble = new Scrabble('d{og')
+    expect(scrabble.score()).toEqual(0)
+  })
+
+  it('returns 0 for invalid multiplier', () => {
+    scrabble = new Scrabble('do}g')
+    expect(scrabble.score()).toEqual(0)
+  })
+})
+
+describe('word multipliers', () => {
+  it('returns 10 for double letter o', () => {
+    scrabble = new Scrabble('{dog}')
+    expect(scrabble.score()).toEqual(10)
+  })
+
+  it('returns 15 for triple letter o', () => {
+    scrabble = new Scrabble('[dog]')
+    expect(scrabble.score()).toEqual(15)
+  })
+
+  it('returns 0 for invalid multiplier', () => {
+    scrabble = new Scrabble('{dog')
+    expect(scrabble.score()).toEqual(0)
+  })
+  it('returns 0 for invalid multiplier', () => {
+    scrabble = new Scrabble('dog}')
+    expect(scrabble.score()).toEqual(0)
+  })
+})
+
+describe('edge cases', () => {
+  it('returns 18 for letter and word multiplier', () => {
+    scrabble = new Scrabble('{[d]og}')
+    expect(scrabble.score()).toEqual(18)
+  })
+
+  it('returns 30 for two word multipliers', () => {
+    scrabble = new Scrabble('[{dog}]')
+    expect(scrabble.score()).toEqual(30)
+  })
+  it('returns 9 for two end letter multipliers', () => {
+    scrabble = new Scrabble('{d}o{g}')
+    expect(scrabble.score()).toEqual(9)
+  })
+
+  it('returns 0 for incorrect tokens', () => {
+    scrabble = new Scrabble('|d|og')
+    expect(scrabble.score()).toEqual(0)
+  })
 })
