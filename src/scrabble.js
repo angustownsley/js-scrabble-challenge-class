@@ -40,7 +40,7 @@ class Scrabble {
     let isValidWord = true
     let total = 0
     let multiplier = 1
-    splitString.forEach((element, index) => {
+    splitString.forEach((element) => {
       if (
         !isValidWord ||
         !element.match(regex) ||
